@@ -65,8 +65,7 @@ export default function RegisterPage() {
             }
 
             // 🔥 Verificamos identities
-            if (data?.user && data.user.identities?.length > 0) {
-                // Registro exitoso real
+            if (data?.user && Array.isArray(data.user.identities) && data.user.identities.length > 0) {
                 toast.success("¡Registro exitoso! Revisa tu correo para confirmar tu cuenta.", {
                     autoClose: 7000
                 })

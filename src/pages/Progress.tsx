@@ -206,7 +206,7 @@ function NutritionChart({ macroData, calorieData }: { macroData: MacroData[]; ca
                         series={[
                             {
                                 data: macroData,
-                                highlightScope: { fade: 'series', highlighted: 'series' }, // <-- CORRECTO
+                                highlightScope: { fade: 'series' },
                                 innerRadius: 30,
                                 outerRadius: 100,
                                 paddingAngle: 2,
