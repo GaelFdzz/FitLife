@@ -97,7 +97,7 @@ export default function Dashboard() {
     ]
 
     return (
-        <div className="space-y-6 bg-[#0D0D0D] min-h-screen p-6">
+        <div className="space-y-6 min-h-screen p-6">
             {/* Welcome Section */}
             <div>
                 <h1 className="text-3xl font-bold text-white mb-2">¡Bienvenido de vuelta!</h1>
