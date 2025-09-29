@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Dumbbell, Mail, Lock, Eye, EyeOff } from "lucide-react"
 import { signIn } from "../lib/supabaseClient" // Importa signIn
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 
 export default function LoginPage() {
@@ -144,9 +144,9 @@ export default function LoginPage() {
             <div className="text-center pt-2">
               <p className="text-[#A3A3A3] text-sm">
                 ¿No tiene una cuenta?{" "}
-                <a href="/register" className="text-[#1DB954] hover:text-[#1ed760] font-medium transition-colors">
+                <Link to="/register" className="text-[#1DB954] hover:text-[#1ed760] font-medium transition-colors">
                   Regístrate aquí
-                </a>
+                </Link>
               </p>
             </div>
           </form>
