@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 6px;
+  background: #181818;
+}
+::-webkit-scrollbar-thumb {
+  background: #1DB954;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #169c43;
+}
+
+/* Selección de texto personalizada */
+::selection {
+  background: #1DB954;
+  color: #0A0A0A;
+}
+::-moz-selection {
+  background: #1DB954;
+  color: #0A0A0A;
+}
