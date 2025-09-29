@@ -3,7 +3,8 @@ import { Flame, Dumbbell, Clock, Award, Calendar, Target, BookOpen, Apple, Check
 import { supabase } from "../lib/supabaseClient"
 
 export default function Dashboard() {
-    const [user, setUser] = useState<any>(null)
+    const [, setUser] = useState<any>(null)
+
 
     useEffect(() => {
         const getUser = async () => {
