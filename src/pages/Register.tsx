@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { Dumbbell, Mail, Lock, User, Calendar, Weight, Ruler, ChevronDown } from "lucide-react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { signUp } from "../lib/supabaseClient"
+import { toast } from "react-toastify"
 
 export default function RegisterPage() {
     const [formData, setFormData] = useState({
@@ -15,37 +17,78 @@ export default function RegisterPage() {
     })
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault()
         setLoading(true)
         setError("")
 
-        setTimeout(() => {
-            if (formData.password !== formData.confirmPassword) {
-                setError("Las contraseñas no coinciden")
-                setLoading(false)
-                return
-            }
-
-            if (formData.password.length < 6) {
-                setError("La contraseña debe tener al menos 6 caracteres")
-                setLoading(false)
-                return
-            }
-
-            if (!formData.fullName || !formData.email || !formData.age || !formData.weight || !formData.height || !formData.goal || !formData.password) {
-                setError("Por favor completa todos los campos")
-                setLoading(false)
-                return
-            }
-
-            console.log("Form submitted:", formData)
+        // Validaciones básicas
+        if (formData.password !== formData.confirmPassword) {
+            setError("Las contraseñas no coinciden")
             setLoading(false)
-        }, 500)
+            return
+        }
+        if (formData.password.length < 6) {
+            setError("La contraseña debe tener al menos 6 caracteres")
+            setLoading(false)
+            return
+        }
+        if (!formData.fullName || !formData.email || !formData.age || !formData.weight || !formData.height || !formData.goal || !formData.password) {
+            setError("Por favor completa todos los campos")
+            setLoading(false)
+            return
+        }
+
+        try {
+            const { data, error: supabaseError } = await signUp(
+                formData.email,
+                formData.password,
+                {
+                    fullName: formData.fullName,
+                    age: formData.age,
+                    weight: formData.weight,
+                    height: formData.height,
+                    goal: formData.goal,
+                }
+            )
+
+            if (supabaseError) {
+                const msg = supabaseError.message.includes("already registered")
+                    ? "Este correo ya está registrado. Usa otro o inicia sesión."
+                    : supabaseError.message
+                setError(msg)
+                toast.error(msg, { autoClose: 7000 })
+                setLoading(false)
+                return
+            }
+
+            // 🔥 Verificamos identities
+            if (data?.user && data.user.identities?.length > 0) {
+                // Registro exitoso real
+                toast.success("¡Registro exitoso! Revisa tu correo para confirmar tu cuenta.", {
+                    autoClose: 7000
+                })
+                navigate("/login")
+            } else {
+                // Usuario ya estaba registrado
+                setError("Este correo ya está registrado o confirmado. Inicia sesión.")
+                toast.error("Este correo ya está registrado o confirmado. Inicia sesión.", {
+                    autoClose: 7000
+                })
+            }
+
+
+        } catch (err: any) {
+            setError("Error inesperado: " + err.message)
+            console.error("Error general en el registro:", err)
+        } finally {
+            setLoading(false)
+        }
     }
 
-    const handleChange = (e) => {
+    const handleChange = (e: any) => {
         setFormData((prev) => ({
             ...prev,
             [e.target.name]: e.target.value,
@@ -80,7 +123,7 @@ export default function RegisterPage() {
                         </div>
                     )}
 
-                    <div className="space-y-5">
+                    <form className="space-y-5" onSubmit={handleSubmit}>
                         {/* Name and Age */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
@@ -93,6 +136,7 @@ export default function RegisterPage() {
                                     </div>
                                     <input
                                         type="text"
+                                        required
                                         name="fullName"
                                         value={formData.fullName}
                                         onChange={handleChange}
@@ -113,6 +157,7 @@ export default function RegisterPage() {
                                     <input
                                         type="number"
                                         name="age"
+                                        required
                                         value={formData.age}
                                         onChange={handleChange}
                                         placeholder="25"
@@ -134,6 +179,7 @@ export default function RegisterPage() {
                                 <input
                                     type="email"
                                     name="email"
+                                    required
                                     value={formData.email}
                                     onChange={handleChange}
                                     placeholder="tu@email.com"
@@ -155,6 +201,7 @@ export default function RegisterPage() {
                                     <input
                                         type="number"
                                         name="weight"
+                                        required
                                         value={formData.weight}
                                         onChange={handleChange}
                                         placeholder="70"
@@ -174,6 +221,7 @@ export default function RegisterPage() {
                                     <input
                                         type="number"
                                         name="height"
+                                        required
                                         value={formData.height}
                                         onChange={handleChange}
                                         placeholder="170"
@@ -191,6 +239,7 @@ export default function RegisterPage() {
                             <div className="relative">
                                 <select
                                     name="goal"
+                                    required
                                     value={formData.goal}
                                     onChange={handleChange}
                                     className="w-full bg-[#0A0A0A] pl-4 pr-10 py-3 border border-[#2D2D2D] rounded-lg focus:ring-2 focus:ring-[#1DB954] focus:border-[#1DB954] outline-none transition-colors appearance-none"
@@ -219,6 +268,7 @@ export default function RegisterPage() {
                                     <input
                                         type="password"
                                         name="password"
+                                        required
                                         value={formData.password}
                                         onChange={handleChange}
                                         placeholder="•••••••"
@@ -238,6 +288,7 @@ export default function RegisterPage() {
                                     <input
                                         type="password"
                                         name="confirmPassword"
+                                        required
                                         value={formData.confirmPassword}
                                         onChange={handleChange}
                                         placeholder="•••••••"
@@ -249,13 +300,13 @@ export default function RegisterPage() {
 
                         {/* Submit Button */}
                         <button
-                            onClick={handleSubmit}
+                            type="submit"
                             disabled={loading}
                             className="w-full bg-[#1DB954] hover:bg-[#1ed760] disabled:bg-[#666] disabled:cursor-not-allowed text-[#0A0A0A] font-semibold py-3 px-4 rounded-lg transition-colors duration-200 mt-6"
                         >
                             {loading ? "Creando cuenta..." : "Crear Cuenta"}
                         </button>
-                    </div>
+                    </form>
 
                     <div className="text-center mt-6">
                         <p className="text-[#A3A3A3] text-sm">

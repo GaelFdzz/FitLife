@@ -22,14 +22,13 @@ export default function DashboardLayout() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        // const getUser = async () => {
-        //   const {
-        //     data: { user },
-        //   } = await supabase.auth.getUser()
-        //   setUser(user)
-        // }
-        // getUser()
-        setUser({ email: "test@fitlife.com" }) // Usuario de prueba
+        const getUser = async () => {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser()
+            setUser(user)
+        }
+        getUser()
     }, [])
 
     const handleSignOut = async () => {

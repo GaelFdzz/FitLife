@@ -1,5 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { User, Activity, Settings, Trophy, Target, Save, Camera, Mail, Phone, MapPin } from "lucide-react"
+import { toast } from "react-toastify";
+import { getCurrentUser, supabase } from "../lib/supabaseClient";
 
 // Personal Info Component
 function PersonalInfo({ user, onUpdate }: { user: any; onUpdate: (data: any) => void }) {
@@ -514,26 +516,8 @@ function Preferences({ preferences, onUpdate }: { preferences: any; onUpdate: (d
 
 export default function Profile() {
     const [activeTab, setActiveTab] = useState("personal")
-
-    const [userData, setUserData] = useState({
-        name: "Diego Ruben Correa",
-        email: "diego.correa@fitlife.com",
-        age: 28,
-        location: "Ciudad de México, México",
-        phone: "+52 55 1234 5678",
-        gender: "male",
-        avatar: "",
-    })
-
-    const [fitnessData, setFitnessData] = useState({
-        weight: 75,
-        height: 175,
-        goal: "muscle-gain",
-        activityLevel: "moderate",
-        targetWeight: 80,
-        bodyFat: 15,
-    })
-
+    const [userData, setUserData] = useState<any>(null)
+    const [fitnessData, setFitnessData] = useState<any>(null)
     const [preferencesData, setPreferencesData] = useState({
         language: "es",
         timezone: "America/Mexico_City",
@@ -552,20 +536,70 @@ export default function Profile() {
             analytics: true,
         },
     })
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        async function fetchProfile() {
+            setLoading(true)
+            const user = await getCurrentUser()
+            if (!user) {
+                toast.error("No se encontró el usuario autenticado.", { autoClose: 4000 })
+                setLoading(false)
+                return
+            }
+            const { data, error } = await supabase
+                .from("profiles")
+                .select("*")
+                .eq("id", user.id)
+                .single()
+            if (error || !data) {
+                toast.error("No se pudo cargar el perfil.", { autoClose: 4000 })
+                setLoading(false)
+                return
+            }
+            setUserData({
+                name: data.full_name || "",
+                email: user.email || "",
+                age: data.age || "",
+                location: "",
+                phone: "",
+                gender: "",
+                avatar: data.avatar_url || "",
+            })
+            setFitnessData({
+                weight: data.weight_kg || "",
+                height: data.height_cm || "",
+                goal: data.goal || "",
+                activityLevel: "",
+                targetWeight: "",
+                bodyFat: "",
+            })
+            setLoading(false)
+        }
+        fetchProfile()
+    }, [])
 
     const handleUpdatePersonalInfo = (data: any) => {
         setUserData(data)
-        console.log("Información personal actualizada:", data)
+        toast.success("Información personal actualizada.", { autoClose: 3000 })
     }
 
     const handleUpdateFitnessMetrics = (data: any) => {
         setFitnessData(data)
-        console.log("Métricas de fitness actualizadas:", data)
+        toast.success("Métricas de fitness actualizadas.", { autoClose: 3000 })
     }
 
     const handleUpdatePreferences = (data: any) => {
         setPreferencesData(data)
-        console.log("Preferencias actualizadas:", data)
+        toast.success("Preferencias actualizadas.", { autoClose: 3000 })
+    }
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <span className="text-white text-lg">Cargando perfil...</span>
+            </div>
+        )
     }
 
     return (
@@ -587,30 +621,27 @@ export default function Profile() {
                             </div>
                             <div>
                                 <p className="text-sm font-medium text-white">Miembro desde</p>
-                                <p className="text-xs text-gray-400">Enero 2024</p>
+                                <p className="text-xs text-gray-400">{/* Puedes mostrar data.created_at aquí si lo deseas */}</p>
                             </div>
                         </div>
-
                         <div className="flex items-center gap-3">
                             <div className="bg-[#1DB954]/10 rounded-full p-2">
                                 <Activity className="h-4 w-4 text-[#1DB954]" />
                             </div>
                             <div>
                                 <p className="text-sm font-medium text-white">Nivel de actividad</p>
-                                <span className="inline-block bg-[#2D2D2D] text-gray-300 px-2 py-0.5 rounded text-xs">Moderado</span>
+                                <span className="inline-block bg-[#2D2D2D] text-gray-300 px-2 py-0.5 rounded text-xs">{fitnessData?.activityLevel || "No definido"}</span>
                             </div>
                         </div>
-
                         <div className="flex items-center gap-3">
                             <div className="bg-[#1DB954]/10 rounded-full p-2">
                                 <Target className="h-4 w-4 text-[#1DB954]" />
                             </div>
                             <div>
                                 <p className="text-sm font-medium text-white">Objetivo principal</p>
-                                <span className="inline-block bg-[#2D2D2D] text-gray-300 px-2 py-0.5 rounded text-xs">Ganancia muscular</span>
+                                <span className="inline-block bg-[#2D2D2D] text-gray-300 px-2 py-0.5 rounded text-xs">{fitnessData?.goal || "No definido"}</span>
                             </div>
                         </div>
-
                         <div className="flex items-center gap-3">
                             <div className="bg-[#1DB954]/10 rounded-full p-2">
                                 <Trophy className="h-4 w-4 text-[#1DB954]" />
@@ -629,8 +660,8 @@ export default function Profile() {
                         <button
                             onClick={() => setActiveTab("personal")}
                             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${activeTab === "personal"
-                                    ? "bg-[#1DB954] text-[#0A0A0A]"
-                                    : "text-gray-400 hover:text-white"
+                                ? "bg-[#1DB954] text-[#0A0A0A]"
+                                : "text-gray-400 hover:text-white"
                                 }`}
                         >
                             <User className="h-4 w-4" />
@@ -639,8 +670,8 @@ export default function Profile() {
                         <button
                             onClick={() => setActiveTab("fitness")}
                             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${activeTab === "fitness"
-                                    ? "bg-[#1DB954] text-[#0A0A0A]"
-                                    : "text-gray-400 hover:text-white"
+                                ? "bg-[#1DB954] text-[#0A0A0A]"
+                                : "text-gray-400 hover:text-white"
                                 }`}
                         >
                             <Activity className="h-4 w-4" />
@@ -649,8 +680,8 @@ export default function Profile() {
                         <button
                             onClick={() => setActiveTab("preferences")}
                             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${activeTab === "preferences"
-                                    ? "bg-[#1DB954] text-[#0A0A0A]"
-                                    : "text-gray-400 hover:text-white"
+                                ? "bg-[#1DB954] text-[#0A0A0A]"
+                                : "text-gray-400 hover:text-white"
                                 }`}
                         >
                             <Settings className="h-4 w-4" />
@@ -659,11 +690,11 @@ export default function Profile() {
                     </div>
 
                     {/* Tab Content */}
-                    {activeTab === "personal" && (
+                    {activeTab === "personal" && userData && (
                         <PersonalInfo user={userData} onUpdate={handleUpdatePersonalInfo} />
                     )}
 
-                    {activeTab === "fitness" && (
+                    {activeTab === "fitness" && fitnessData && (
                         <FitnessMetrics metrics={fitnessData} onUpdate={handleUpdateFitnessMetrics} />
                     )}
 

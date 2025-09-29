@@ -1,5 +1,8 @@
 import { useState } from "react"
 import { Dumbbell, Mail, Lock, Eye, EyeOff } from "lucide-react"
+import { signIn } from "../lib/supabaseClient" // Importa signIn
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -9,20 +12,30 @@ export default function LoginPage() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
     setLoading(true)
     setError("")
-
-    setTimeout(() => {
-      // Aquí iría la integración con Supabase
-      console.log("Login attempt:", formData)
+    try {
+      const { data, error: supabaseError } = await signIn(formData.email, formData.password)
+      if (supabaseError) {
+        toast.error("Credenciales incorrectas. Intenta de nuevo.", { autoClose: 5000 })
+        console.error("Error de Supabase durante el inicio de sesión:", supabaseError)
+      } else if (data.user) {
+        toast.success("¡Bienvenido de nuevo!", { autoClose: 3500 })
+        navigate("/dashboard") // Redirige al dashboard
+      }
+    } catch (err: any) {
+      setError("Error inesperado: " + err.message)
+      console.error("Error general en el inicio de sesión:", err)
+    } finally {
       setLoading(false)
-    }, 500)
+    }
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -57,7 +70,7 @@ export default function LoginPage() {
             </div>
           )}
 
-          <div className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             {/* Email */}
             <div>
               <label className="block text-sm font-medium text-white mb-2">
@@ -70,6 +83,7 @@ export default function LoginPage() {
                 <input
                   type="email"
                   name="email"
+                  required
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="tu@email.com"
@@ -90,6 +104,7 @@ export default function LoginPage() {
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
+                  required
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••••"
@@ -118,7 +133,7 @@ export default function LoginPage() {
 
             {/* Submit Button */}
             <button
-              onClick={handleSubmit}
+              type="submit"
               disabled={loading}
               className="w-full bg-[#1DB954] hover:bg-[#1ed760] disabled:bg-[#666] disabled:cursor-not-allowed text-[#0A0A0A] font-semibold py-3 px-4 rounded-lg transition-colors duration-200"
             >
@@ -134,7 +149,7 @@ export default function LoginPage() {
                 </a>
               </p>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

@@ -41,7 +41,7 @@ interface BodyMeasurement {
 }
 
 // WeightChart Component
-function WeightChart({ data }: { data: WeightData[] }) { // <-- Elimina goal, no se usa
+function WeightChart({ data }: { data: WeightData[] }) {
     const dates = data.map(item => item.date)
     const weights = data.map(item => item.weight)
     const targets = data.map(item => item.target)
@@ -65,54 +65,37 @@ function WeightChart({ data }: { data: WeightData[] }) { // <-- Elimina goal, no
                     width={800}
                     height={300}
                     series={[
-                        {
-                            data: weights,
-                            label: 'Peso Actual',
-                            color: '#1DB954',
-                            curve: 'linear'
-                        },
-                        {
-                            data: targets,
-                            label: 'Objetivo',
-                            color: '#A3A3A3',
-                            curve: 'linear'
-                        }
+                        { data: weights, label: 'Peso Actual', color: '#1DB954', curve: 'linear' },
+                        { data: targets, label: 'Objetivo', color: '#A3A3A3', curve: 'linear' }
                     ]}
                     xAxis={[{
                         scaleType: 'point',
                         data: dates,
                         tickLabelStyle: {
-                            fill: '#A3A3A3',
+                            fill: '#FFFFFF', // blanco
                             fontSize: 12
                         }
                     }]}
                     yAxis={[{
                         tickLabelStyle: {
-                            fill: '#A3A3A3',
+                            fill: '#FFFFFF', // blanco
                             fontSize: 12
                         }
                     }]}
                     sx={{
-                        '& .MuiChartsAxis-root .MuiChartsAxis-line': {
-                            stroke: '#2D2D2D'
+                        '& .MuiChartsLegend-label': {
+                            color: '#FFFFFF !important',
+                            fill: '#FFFFFF !important',
                         },
-                        '& .MuiChartsAxis-root .MuiChartsAxis-tick': {
-                            stroke: '#2D2D2D'
+                        '& .MuiChartsLegend-series text': {
+                            fill: '#FFFFFF !important',
+                        },
+                        '& .MuiChartsLegend-root text': {
+                            fill: '#FFFFFF !important',
                         },
                         '& .MuiChartsGrid-line': {
                             stroke: '#2D2D2D',
                             strokeDasharray: '3 3'
-                        },
-                        '& .MuiChartsLegend-root': {
-                            '& text': {
-                                fill: '#FAFAFA !important'
-                            }
-                        },
-                        '& .MuiChartsTooltip-root': {
-                            backgroundColor: '#1A1A1A',
-                            border: '1px solid #2D2D2D',
-                            borderRadius: '8px',
-                            color: '#FAFAFA'
                         }
                     }}
                     margin={{ left: 50, right: 50, top: 50, bottom: 50 }}
@@ -182,10 +165,15 @@ function WorkoutChart({ data }: { data: WorkoutData[] }) {
                             stroke: '#2D2D2D',
                             strokeDasharray: '3 3'
                         },
-                        '& .MuiChartsLegend-root': {
-                            '& text': {
-                                fill: '#FAFAFA !important'
-                            }
+                        '& .MuiChartsLegend-label': {
+                            color: '#FFFFFF !important',
+                            fill: '#FFFFFF !important',
+                        },
+                        '& .MuiChartsLegend-series text': {
+                            fill: '#FFFFFF !important',
+                        },
+                        '& .MuiChartsLegend-root text': {
+                            fill: '#FFFFFF !important',
                         }
                     }}
                     margin={{ left: 50, right: 50, top: 50, bottom: 50 }}
@@ -228,10 +216,15 @@ function NutritionChart({ macroData, calorieData }: { macroData: MacroData[]; ca
                         width={350}
                         height={250}
                         sx={{
-                            '& .MuiChartsLegend-root': {
-                                '& text': {
-                                    fill: '#FAFAFA !important'
-                                }
+                            '& .MuiChartsLegend-label': {
+                                color: '#FFFFFF !important',
+                                fill: '#FFFFFF !important',
+                            },
+                            '& .MuiChartsLegend-series text': {
+                                fill: '#FFFFFF !important',
+                            },
+                            '& .MuiChartsLegend-root text': {
+                                fill: '#FFFFFF !important',
                             }
                         }}
                         margin={{ right: 5 }}
@@ -302,10 +295,15 @@ function NutritionChart({ macroData, calorieData }: { macroData: MacroData[]; ca
                                 stroke: '#2D2D2D',
                                 strokeDasharray: '3 3'
                             },
-                            '& .MuiChartsLegend-root': {
-                                '& text': {
-                                    fill: '#FAFAFA !important'
-                                }
+                            '& .MuiChartsLegend-label': {
+                                color: '#FFFFFF !important',
+                                fill: '#FFFFFF !important',
+                            },
+                            '& .MuiChartsLegend-series text': {
+                                fill: '#FFFFFF !important',
+                            },
+                            '& .MuiChartsLegend-root text': {
+                                fill: '#FFFFFF !important',
                             }
                         }}
                         margin={{ left: 50, right: 50, top: 50, bottom: 50 }}
@@ -412,10 +410,15 @@ function BodyMeasurements({ data }: { data: BodyMeasurement[] }) {
                             stroke: '#2D2D2D',
                             strokeDasharray: '3 3'
                         },
-                        '& .MuiChartsLegend-root': {
-                            '& text': {
-                                fill: '#FAFAFA !important'
-                            }
+                        '& .MuiChartsLegend-label': {
+                            color: '#FFFFFF !important',
+                            fill: '#FFFFFF !important',
+                        },
+                        '& .MuiChartsLegend-series text': {
+                            fill: '#FFFFFF !important',
+                        },
+                        '& .MuiChartsLegend-root text': {
+                            fill: '#FFFFFF !important',
                         }
                     }}
                     margin={{ left: 50, right: 50, top: 50, bottom: 50 }}
@@ -598,7 +601,7 @@ export default function Progress() {
                 </div>
 
                 {/* Summary Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 ">
                     <StatCard
                         title="Peso Actual"
                         value="75.2 kg"

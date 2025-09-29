@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react"
 import { Flame, Dumbbell, Clock, Award, Calendar, Target, BookOpen, Apple, Check } from "lucide-react"
+import { supabase } from "../lib/supabaseClient"
 
 export default function Dashboard() {
     const [user, setUser] = useState<any>(null)
 
     useEffect(() => {
-        setUser({ email: "test@fitlife.com" }) // Usuario de prueba
+        const getUser = async () => {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser()
+            setUser(user)
+        }
+        getUser()
     }, [])
 
     const stats = [
