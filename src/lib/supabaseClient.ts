@@ -53,7 +53,6 @@ export const getCurrentUser = async () => {
   return user
 }
 
-// Función actualizada con mejor manejo de errores y el campo age
 export async function createProfile(userId: string, profileData: {
   fullName: string
   age: string

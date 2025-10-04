@@ -1,9 +1,6 @@
-"use client"
-
 import { useState } from "react"
 import { Calendar, TrendingUp, Apple, Search, Plus, Edit3, Trash2, Target, Droplets, Zap } from "lucide-react"
 
-// Types
 interface FoodEntry {
   id: string
   name: string
@@ -33,7 +30,6 @@ interface CurrentIntake {
   water: number
 }
 
-// DailySummary Component
 function DailySummary({ goals, intake }: { goals: NutritionGoals; intake: CurrentIntake }) {
   const getProgressColor = (current: number, goal: number) => {
     const percentage = (current / goal) * 100
@@ -62,7 +58,6 @@ function DailySummary({ goals, intake }: { goals: NutritionGoals; intake: Curren
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        {/* Calories */}
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <Zap className="h-4 w-4 text-[#1DB954]" />
@@ -85,7 +80,6 @@ function DailySummary({ goals, intake }: { goals: NutritionGoals; intake: Curren
           </div>
         </div>
 
-        {/* Protein */}
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <Target className="h-4 w-4 text-blue-400" />
@@ -108,7 +102,6 @@ function DailySummary({ goals, intake }: { goals: NutritionGoals; intake: Curren
           </div>
         </div>
 
-        {/* Carbs */}
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <Apple className="h-4 w-4 text-orange-400" />
@@ -131,7 +124,6 @@ function DailySummary({ goals, intake }: { goals: NutritionGoals; intake: Curren
           </div>
         </div>
 
-        {/* Fat */}
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <Droplets className="h-4 w-4 text-purple-400" />
@@ -158,12 +150,10 @@ function DailySummary({ goals, intake }: { goals: NutritionGoals; intake: Curren
   )
 }
 
-// FoodSearch Component
 function FoodSearch({ onAddFood }: { onAddFood: (food: any, quantity: number) => void }) {
   const [searchQuery, setSearchQuery] = useState("")
   const [quantity, setQuantity] = useState(1)
 
-  // Mock food database
   const mockFoods = [
     { name: "Pechuga de Pollo", serving: "100g", calories: 165, protein: 31, carbs: 0, fat: 3.6 },
     { name: "Arroz Integral", serving: "100g", calories: 111, protein: 2.6, carbs: 22, fat: 0.9 },
@@ -226,7 +216,6 @@ function FoodSearch({ onAddFood }: { onAddFood: (food: any, quantity: number) =>
   )
 }
 
-// MealLog Component
 function MealLog({ 
   meals, 
   onAddFood, 
@@ -324,7 +313,6 @@ function MealLog({
   )
 }
 
-// StatCard Component
 function StatCard({ 
   title, 
   value, 
@@ -353,7 +341,6 @@ function StatCard({
 }
 
 export default function Nutrition() {
-  // Mock data - En una aplicación real, esto vendría de Supabase
   const [nutritionGoals] = useState<NutritionGoals>({
     calories: 2200,
     protein: 150,
@@ -416,7 +403,6 @@ export default function Nutrition() {
     ] as FoodEntry[],
   })
 
-  // Calculate current intake
   const currentIntake: CurrentIntake = Object.values(meals)
     .flat()
     .reduce(
@@ -425,8 +411,8 @@ export default function Nutrition() {
         protein: totals.protein + food.protein * food.quantity,
         carbs: totals.carbs + food.carbs * food.quantity,
         fat: totals.fat + food.fat * food.quantity,
-        fiber: totals.fiber + 2, // Mock fiber calculation
-        water: 1.8, // Mock water intake
+        fiber: totals.fiber + 2,
+        water: 1.8,
       }),
       { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0, water: 0 }
     )
@@ -444,7 +430,6 @@ export default function Nutrition() {
       time: new Date().toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" }),
     }
 
-    // For demo purposes, add to breakfast
     setMeals((prev) => ({
       ...prev,
       breakfast: [...prev.breakfast, newFood],
@@ -453,12 +438,10 @@ export default function Nutrition() {
 
   const handleAddFoodToMeal = (mealType: string) => {
     console.log("Agregar comida a:", mealType)
-    // En una aplicación real, aquí se abriría un modal o navegaría a la búsqueda
   }
 
   const handleEditFood = (foodId: string) => {
     console.log("Editar comida:", foodId)
-    // En una aplicación real, aquí se abriría un modal de edición
   }
 
   const handleDeleteFood = (foodId: string) => {
@@ -475,7 +458,6 @@ export default function Nutrition() {
   return (
     <div className="min-h-screen p-6">
       <div className="mx-auto space-y-8">
-        {/* Header */}
         <div className="flex items-center justify-between">
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-white">Seguimiento Nutricional</h1>
@@ -495,16 +477,13 @@ export default function Nutrition() {
           </div>
         </div>
 
-        {/* Daily Summary */}
         <DailySummary goals={nutritionGoals} intake={currentIntake} />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Food Search */}
           <div className="lg:col-span-1">
             <FoodSearch onAddFood={handleAddFood} />
           </div>
 
-          {/* Meal Log */}
           <div className="lg:col-span-2">
             <MealLog
               meals={meals}
@@ -515,7 +494,6 @@ export default function Nutrition() {
           </div>
         </div>
 
-        {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatCard
             title="Comidas Registradas"

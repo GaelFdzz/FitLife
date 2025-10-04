@@ -3,7 +3,6 @@ import { User, Activity, Settings, Trophy, Target, Save, Camera, Mail, Phone, Ma
 import { toast } from "react-toastify";
 import { getCurrentUser, supabase } from "../lib/supabaseClient";
 
-// Personal Info Component
 function PersonalInfo({ user, onUpdate }: { user: any; onUpdate: (data: any) => void }) {
     const [formData, setFormData] = useState(user)
     const [isEditing, setIsEditing] = useState(false)
@@ -169,7 +168,6 @@ function PersonalInfo({ user, onUpdate }: { user: any; onUpdate: (data: any) => 
     )
 }
 
-// Fitness Metrics Component
 function FitnessMetrics({ metrics, onUpdate }: { metrics: any; onUpdate: (data: any) => void }) {
     const [formData, setFormData] = useState(metrics)
     const [isEditing, setIsEditing] = useState(false)
@@ -326,7 +324,6 @@ function FitnessMetrics({ metrics, onUpdate }: { metrics: any; onUpdate: (data: 
     )
 }
 
-// Preferences Component
 function Preferences({ preferences, onUpdate }: { preferences: any; onUpdate: (data: any) => void }) {
     const [formData, setFormData] = useState(preferences)
 
@@ -605,13 +602,11 @@ export default function Profile() {
     return (
         <div className="min-h-screen p-6">
             <div className="mx-auto space-y-6">
-                {/* Header */}
                 <div className="space-y-2">
                     <h1 className="text-3xl font-bold text-white">Mi Perfil</h1>
                     <p className="text-gray-400">Gestiona tu información personal, métricas y preferencias.</p>
                 </div>
 
-                {/* Profile Overview */}
                 <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-6">
                     <h2 className="text-lg font-semibold text-white mb-4">Resumen del Perfil</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -621,7 +616,7 @@ export default function Profile() {
                             </div>
                             <div>
                                 <p className="text-sm font-medium text-white">Miembro desde</p>
-                                <p className="text-xs text-gray-400">{/* Puedes mostrar data.created_at aquí si lo deseas */}</p>
+                                <p className="text-xs text-gray-400"></p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -654,7 +649,6 @@ export default function Profile() {
                     </div>
                 </div>
 
-                {/* Profile Tabs */}
                 <div className="space-y-6">
                     <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-xl p-1 inline-flex gap-1">
                         <button
@@ -689,7 +683,6 @@ export default function Profile() {
                         </button>
                     </div>
 
-                    {/* Tab Content */}
                     {activeTab === "personal" && userData && (
                         <PersonalInfo user={userData} onUpdate={handleUpdatePersonalInfo} />
                     )}

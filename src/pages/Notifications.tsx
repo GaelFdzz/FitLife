@@ -1,12 +1,10 @@
 import { Calendar, Target, Trophy } from "lucide-react";
 import NotificationCenter from "../components/NotificationCenter";
 
-// NotificationsPage Component
 export default function Notifications() {
   return (
     <div className="min-h-screen p-6">
       <div className="mx-auto space-y-6">
-        {/* Header */}
         <div className="space-y-2">
           <h1 className="text-3xl font-bold text-white">Centro de Notificaciones</h1>
           <p className="text-gray-400">
@@ -14,7 +12,6 @@ export default function Notifications() {
           </p>
         </div>
 
-        {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-4 hover:border-[#1DB954]/30 transition-all">
             <div className="flex items-center gap-3">
@@ -53,7 +50,6 @@ export default function Notifications() {
           </div>
         </div>
 
-        {/* Notification Settings */}
         <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-6">
           <h2 className="text-lg font-semibold text-white mb-4">Configuración de Notificaciones</h2>
           <div className="space-y-4">
@@ -121,7 +117,6 @@ export default function Notifications() {
           </div>
         </div>
 
-        {/* Main Notifications */}
         <NotificationCenter />
       </div>
     </div>

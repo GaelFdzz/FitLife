@@ -1,5 +1,4 @@
 import { Navigate, Route, Routes } from "react-router-dom"
-
 import DashboardLayout from "./layout/DashboardLayout"
 import Dashboard from "./pages/Dashboard"
 import ExerciseLibrary from "./pages/ExerciseLibrary"
@@ -18,16 +17,15 @@ import { ToastContainer } from "react-toastify"
 
 function App() {
 
-  // Componente para proteger rutas
   const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { user, loading } = useAuth();
+    const { user, loading } = useAuth()
     if (loading) {
       return <div>Cargando autenticación...</div>
     }
     if (!user) {
-      return <Navigate to="/login" replace />;
+      return <Navigate to="/login" replace />
     }
-    return <>{children}</>;
+    return <>{children}</>
   };
 
   return (
@@ -42,14 +40,13 @@ function App() {
         draggable
         theme="dark"
       />
-      <AuthProvider> {/* Envuelve tus rutas con AuthProvider */}
+      <AuthProvider>
         <Routes>
           <Route path="/" element={<LandinPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register />} />
-          {/* Rutas protegidas con DashboardLayout */}
           <Route
-            path="/dashboard/*" // Usa /* para rutas anidadas
+            path="/dashboard/*"
             element={
               <ProtectedRoute>
                 <DashboardLayout />

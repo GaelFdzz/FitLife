@@ -24,7 +24,6 @@ export default function RegisterPage() {
         setLoading(true)
         setError("")
 
-        // Validaciones básicas
         if (formData.password !== formData.confirmPassword) {
             setError("Las contraseñas no coinciden")
             setLoading(false)
@@ -64,14 +63,12 @@ export default function RegisterPage() {
                 return
             }
 
-            // 🔥 Verificamos identities
             if (data?.user && Array.isArray(data.user.identities) && data.user.identities.length > 0) {
                 toast.success("¡Registro exitoso! Revisa tu correo para confirmar tu cuenta.", {
                     autoClose: 7000
                 })
                 navigate("/login")
             } else {
-                // Usuario ya estaba registrado
                 setError("Este correo ya está registrado o confirmado. Inicia sesión.")
                 toast.error("Este correo ya está registrado o confirmado. Inicia sesión.", {
                     autoClose: 7000
@@ -97,7 +94,6 @@ export default function RegisterPage() {
     return (
         <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center py-12 px-4">
             <div className="w-full max-w-2xl">
-                {/* Header */}
                 <div className="text-center mb-8">
                     <div
                         className="bg-[#1DB954] rounded-full p-4 w-fit mx-auto mb-4"
@@ -109,7 +105,6 @@ export default function RegisterPage() {
                     <p className="text-[#A3A3A3]">Comienza tu viaje hacia el bienestar</p>
                 </div>
 
-                {/* Form Card */}
                 <div className="bg-[#0A0A0A] border border-[#2D2D2D] rounded-2xl p-8">
                     <div className="text-center mb-6">
                         <h2 className="text-2xl font-bold text-white mb-2">Crear Cuenta</h2>
@@ -123,7 +118,6 @@ export default function RegisterPage() {
                     )}
 
                     <form className="space-y-5" onSubmit={handleSubmit}>
-                        {/* Name and Age */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-sm font-medium text-white mb-2">
@@ -166,7 +160,6 @@ export default function RegisterPage() {
                             </div>
                         </div>
 
-                        {/* Email */}
                         <div>
                             <label className="block text-sm font-medium text-white mb-2">
                                 Correo Electrónico
@@ -187,7 +180,6 @@ export default function RegisterPage() {
                             </div>
                         </div>
 
-                        {/* Weight and Height */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-sm font-medium text-white mb-2">
@@ -230,7 +222,6 @@ export default function RegisterPage() {
                             </div>
                         </div>
 
-                        {/* Goal */}
                         <div>
                             <label className="block text-sm font-medium text-white mb-2">
                                 Objetivo Principal
@@ -254,7 +245,6 @@ export default function RegisterPage() {
                             </div>
                         </div>
 
-                        {/* Passwords */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-sm font-medium text-white mb-2">
@@ -297,7 +287,6 @@ export default function RegisterPage() {
                             </div>
                         </div>
 
-                        {/* Submit Button */}
                         <button
                             type="submit"
                             disabled={loading}

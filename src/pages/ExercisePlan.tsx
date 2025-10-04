@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { Plus, Target, Clock, Zap, Play, Eye, Calendar, Award, TrendingUp } from "lucide-react"
 
-// Types
 interface ExercisePlan {
   id: string
   name: string
@@ -16,7 +15,6 @@ interface ExercisePlan {
   isActive?: boolean
 }
 
-// PlanCard component
 function PlanCard({ 
   plan, 
   onStart, 
@@ -54,7 +52,6 @@ function PlanCard({
         : 'border-[#2D2D2D] hover:border-[#1DB954]/50 hover:bg-[#1A1A1A]/80'
     }`}>
       <div className="space-y-4">
-        {/* Header */}
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div className="text-2xl">{getGoalIcon(plan.goal)}</div>
@@ -75,12 +72,10 @@ function PlanCard({
           </span>
         </div>
 
-        {/* Description */}
         <p className="text-gray-400 text-sm leading-relaxed">
           {plan.description}
         </p>
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-2 gap-4">
           <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4 text-[#1DB954]" />
@@ -100,7 +95,6 @@ function PlanCard({
           </div>
         </div>
 
-        {/* Progress */}
         {plan.isActive && (
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -121,7 +115,6 @@ function PlanCard({
           </div>
         )}
 
-        {/* Actions */}
         <div className="flex gap-2 pt-2 border-t border-[#2D2D2D]">
           <button
             onClick={onStart}
@@ -146,7 +139,6 @@ function PlanCard({
   )
 }
 
-// StatCard component
 function StatCard({ 
   title, 
   value, 
@@ -185,7 +177,6 @@ function StatCard({
 }
 
 export default function ExercisePlan() {
-  // Mock data - En una aplicación real, esto vendría de Supabase
   const [plans] = useState<ExercisePlan[]>([
     {
       id: "1",
@@ -252,18 +243,15 @@ export default function ExercisePlan() {
 
   const handleStartPlan = (planId: string) => {
     console.log("Iniciando plan:", planId)
-    // En una aplicación real, aquí actualizarías el estado en Supabase
   }
 
   const handleViewDetails = (planId: string) => {
     console.log("Ver detalles del plan:", planId)
-    // En una aplicación real, aquí navegarías con react-router-dom
-    // navigate(`/plans/${planId}`)
+
   }
 
   const handleCreatePlan = () => {
     console.log("Crear nuevo plan")
-    // navigate('/plans/create')
   }
 
   const activePlan = plans.find((plan) => plan.isActive)
@@ -272,7 +260,6 @@ export default function ExercisePlan() {
   return (
     <div className="min-h-screen p-6">
       <div className="mx-auto space-y-8">
-        {/* Header */}
         <div className="flex items-center justify-between">
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-white">Planes de Ejercicio</h1>
@@ -289,7 +276,6 @@ export default function ExercisePlan() {
           </button>
         </div>
 
-        {/* Active Plan Section */}
         {activePlan && (
           <div className="space-y-4">
             <h2 className="text-xl font-semibold text-white">Tu Plan Activo</h2>
@@ -302,7 +288,6 @@ export default function ExercisePlan() {
                 />
               </div>
               
-              {/* Progress Summary */}
               <div className="space-y-4">
                 <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-6">
                   <h3 className="text-lg font-semibold text-white mb-4">Progreso Semanal</h3>
@@ -332,7 +317,6 @@ export default function ExercisePlan() {
           </div>
         )}
 
-        {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatCard
             title="Planes Completados"
@@ -357,7 +341,6 @@ export default function ExercisePlan() {
           />
         </div>
 
-        {/* Available Plans */}
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-white">Planes Disponibles</h2>

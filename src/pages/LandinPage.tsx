@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"
 export default function LandinPage() {
   return (
     <div className="min-h-screen bg-[#0A0A0A]">
-      {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#1DB954]/20 via-[#0A0A0A] to-[#0A0A0A]" />
         <div className="relative container mx-auto px-4 py-20">
@@ -42,7 +41,6 @@ export default function LandinPage() {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="py-20 container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#FAFAFA]">
@@ -92,7 +90,6 @@ export default function LandinPage() {
         </div>
       </section>
 
-      {/* Benefits Section */}
       <section className="py-20 bg-[#1A1A1A]/20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

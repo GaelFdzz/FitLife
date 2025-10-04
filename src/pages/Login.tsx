@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Dumbbell, Mail, Lock, Eye, EyeOff } from "lucide-react"
-import { signIn } from "../lib/supabaseClient" // Importa signIn
+import { signIn } from "../lib/supabaseClient"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 
@@ -25,7 +25,7 @@ export default function LoginPage() {
         console.error("Error de Supabase durante el inicio de sesión:", supabaseError)
       } else if (data.user) {
         toast.success("¡Bienvenido de nuevo!", { autoClose: 3500 })
-        navigate("/dashboard") // Redirige al dashboard
+        navigate("/dashboard")
       }
     } catch (err: any) {
       setError("Error inesperado: " + err.message)
@@ -45,7 +45,6 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center py-12 px-4">
       <div className="w-full max-w-md">
-        {/* Header */}
         <div className="text-center mb-8">
           <div
             className="bg-[#1DB954] rounded-full p-4 w-fit mx-auto mb-4"
@@ -57,7 +56,6 @@ export default function LoginPage() {
           <p className="text-[#A3A3A3]">Tu sistema integral de bienestar</p>
         </div>
 
-        {/* Form Card */}
         <div className="bg-[#0A0A0A] border border-[#2D2D2D] rounded-2xl p-8">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-white mb-2">Iniciar Sesión</h2>
@@ -71,7 +69,6 @@ export default function LoginPage() {
           )}
 
           <form className="space-y-5" onSubmit={handleSubmit}>
-            {/* Email */}
             <div>
               <label className="block text-sm font-medium text-white mb-2">
                 Correo Electrónico
@@ -92,7 +89,6 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Password */}
             <div>
               <label className="block text-sm font-medium text-white mb-2">
                 Contraseña
@@ -124,14 +120,12 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Forgot Password Link */}
             <div className="text-left">
               <a href="#" className="text-sm text-[#1DB954] hover:text-[#1ed760] transition-colors">
                 ¿Olvidaste tu contraseña?
               </a>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
@@ -140,7 +134,6 @@ export default function LoginPage() {
               {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
             </button>
 
-            {/* Register Link */}
             <div className="text-center pt-2">
               <p className="text-[#A3A3A3] text-sm">
                 ¿No tiene una cuenta?{" "}

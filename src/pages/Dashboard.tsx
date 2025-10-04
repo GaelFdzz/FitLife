@@ -98,13 +98,11 @@ export default function Dashboard() {
 
     return (
         <div className="space-y-6 min-h-screen p-6">
-            {/* Welcome Section */}
             <div>
                 <h1 className="text-3xl font-bold text-white mb-2">¡Bienvenido de vuelta!</h1>
                 <p className="text-gray-400">Aquí tienes un resumen de tu progreso y actividades recientes.</p>
             </div>
 
-            {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat, index) => (
                     <div key={index} className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-6 relative">
@@ -131,7 +129,6 @@ export default function Dashboard() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Quick Actions */}
                 <div className="lg:col-span-2">
                     <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-6">
                         <div className="mb-6">
@@ -167,7 +164,6 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                {/* Weekly Progress */}
                 <div className="lg:col-span-1">
                     <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-6">
                         <div className="mb-6">

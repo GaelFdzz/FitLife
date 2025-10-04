@@ -25,19 +25,16 @@ export default function Settings() {
 
   const handleSave = () => {
     console.log("Settings saved:", settings)
-    // Aquí guardarías la configuración en Supabase
   }
 
   return (
     <div className="min-h-screen p-6">
       <div className="mx-auto space-y-6">
-        {/* Header */}
         <div>
           <h1 className="text-3xl font-bold text-white mb-2">Configuración</h1>
           <p className="text-gray-400">Personaliza tu experiencia en FitLife</p>
         </div>
 
-        {/* Notification Settings */}
         <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-6">
             <div className="bg-[#1DB954]/10 rounded-full p-2">
@@ -47,7 +44,6 @@ export default function Settings() {
           </div>
 
           <div className="space-y-4">
-            {/* Workout Reminders */}
             <div className="flex items-center justify-between py-3 border-b border-[#2D2D2D]">
               <div>
                 <label htmlFor="workout-reminders" className="text-white font-medium cursor-pointer">
@@ -67,7 +63,6 @@ export default function Settings() {
               </label>
             </div>
 
-            {/* Achievement Notifications */}
             <div className="flex items-center justify-between py-3 border-b border-[#2D2D2D]">
               <div>
                 <label htmlFor="achievement-notifications" className="text-white font-medium cursor-pointer">
@@ -87,7 +82,6 @@ export default function Settings() {
               </label>
             </div>
 
-            {/* Nutrition Reminders */}
             <div className="flex items-center justify-between py-3 border-b border-[#2D2D2D]">
               <div>
                 <label htmlFor="nutrition-reminders" className="text-white font-medium cursor-pointer">
@@ -107,7 +101,6 @@ export default function Settings() {
               </label>
             </div>
 
-            {/* Weekly Reports */}
             <div className="flex items-center justify-between py-3">
               <div>
                 <label htmlFor="weekly-reports" className="text-white font-medium cursor-pointer">
@@ -129,7 +122,6 @@ export default function Settings() {
           </div>
         </div>
 
-        {/* Privacy Settings */}
         <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-6">
             <div className="bg-[#1DB954]/10 rounded-full p-2">
@@ -139,7 +131,6 @@ export default function Settings() {
           </div>
 
           <div className="space-y-4">
-            {/* Profile Visibility */}
             <div className="space-y-2 pb-4 border-b border-[#2D2D2D]">
               <label className="text-white font-medium">Visibilidad del Perfil</label>
               <div className="relative">
@@ -156,7 +147,6 @@ export default function Settings() {
               </div>
             </div>
 
-            {/* Share Progress */}
             <div className="flex items-center justify-between py-3 border-b border-[#2D2D2D]">
               <div>
                 <label htmlFor="share-progress" className="text-white font-medium cursor-pointer">
@@ -176,7 +166,6 @@ export default function Settings() {
               </label>
             </div>
 
-            {/* Share Workouts */}
             <div className="flex items-center justify-between py-3">
               <div>
                 <label htmlFor="share-workouts" className="text-white font-medium cursor-pointer">
@@ -198,7 +187,6 @@ export default function Settings() {
           </div>
         </div>
 
-        {/* App Preferences */}
         <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-6">
             <div className="bg-[#1DB954]/10 rounded-full p-2">
@@ -208,7 +196,6 @@ export default function Settings() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Theme */}
             <div className="space-y-2">
               <label className="text-white font-medium">Tema</label>
               <div className="relative">
@@ -225,7 +212,6 @@ export default function Settings() {
               </div>
             </div>
 
-            {/* Language */}
             <div className="space-y-2">
               <label className="text-white font-medium">Idioma</label>
               <div className="relative">
@@ -242,7 +228,6 @@ export default function Settings() {
               </div>
             </div>
 
-            {/* Units */}
             <div className="space-y-2">
               <label className="text-white font-medium">Unidades</label>
               <div className="relative">
@@ -258,7 +243,6 @@ export default function Settings() {
               </div>
             </div>
 
-            {/* Start of Week */}
             <div className="space-y-2">
               <label className="text-white font-medium">Inicio de Semana</label>
               <div className="relative">
@@ -276,7 +260,6 @@ export default function Settings() {
           </div>
         </div>
 
-        {/* Save Button */}
         <div className="flex justify-end">
           <button
             onClick={handleSave}

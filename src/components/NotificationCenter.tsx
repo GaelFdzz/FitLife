@@ -1,9 +1,6 @@
-"use client"
-
 import { useState } from "react"
 import { Bell, Check, X, Trophy, Target, Calendar, Utensils, User } from "lucide-react"
 
-// Types
 interface Notification {
   id: string
   type: "achievement" | "reminder" | "goal" | "social"
@@ -14,7 +11,6 @@ interface Notification {
   icon: React.ReactNode
 }
 
-// NotificationCenter Component
 export default function NotificationCenter() {
   const [notifications, setNotifications] = useState<Notification[]>([
     {
@@ -104,7 +100,6 @@ export default function NotificationCenter() {
 
   return (
     <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl overflow-hidden">
-      {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-[#2D2D2D]">
         <div className="flex items-center gap-3">
           <div className="bg-[#1DB954]/10 rounded-full p-2">
@@ -131,7 +126,6 @@ export default function NotificationCenter() {
         )}
       </div>
 
-      {/* Notifications List */}
       <div className="divide-y divide-[#2D2D2D]">
         {displayNotifications.length > 0 ? (
           displayNotifications.map((notification) => (
@@ -142,14 +136,12 @@ export default function NotificationCenter() {
               }`}
             >
               <div className="flex items-start gap-4">
-                {/* Icon */}
                 <div className="flex-shrink-0 mt-1">
                   <div className="bg-[#2D2D2D] rounded-full p-2">
                     {notification.icon}
                   </div>
                 </div>
 
-                {/* Content */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1">
@@ -169,7 +161,6 @@ export default function NotificationCenter() {
                       <p className="text-xs text-gray-500 mt-2">hace {notification.time}</p>
                     </div>
 
-                    {/* Actions */}
                     <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       {!notification.read && (
                         <button
@@ -194,7 +185,6 @@ export default function NotificationCenter() {
             </div>
           ))
         ) : (
-          /* Empty State */
           <div className="text-center py-12 px-6">
             <div className="bg-[#2D2D2D]/50 rounded-full p-4 w-fit mx-auto mb-4">
               <Bell className="h-8 w-8 text-gray-500" />
@@ -205,7 +195,6 @@ export default function NotificationCenter() {
         )}
       </div>
 
-      {/* Footer */}
       {notifications.length > 4 && (
         <div className="p-4 border-t border-[#2D2D2D]">
           <button

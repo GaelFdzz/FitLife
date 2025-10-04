@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { Search, Filter, Play, Eye, Clock, Flame, Target, Dumbbell } from "lucide-react"
 
-// Types
 interface Exercise {
     id: string
     name: string
@@ -22,7 +21,6 @@ interface Filters {
     muscles?: string[]
 }
 
-// ExerciseCard component
 function ExerciseCard({
     exercise,
     onStart,
@@ -44,7 +42,6 @@ function ExerciseCard({
     return (
         <div className="bg-[#1A1A1A] border border-[#404040] rounded-2xl p-6 hover:border-[#1DB954]/50 hover:bg-[#1A1A1A]/80 transition-all duration-300 group">
             <div className="space-y-4">
-                {/* Header */}
                 <div className="flex items-start justify-between">
                     <div className="bg-[#1DB954]/10 rounded-full p-3">
                         <Dumbbell className="h-6 w-6 text-[#1DB954]" />
@@ -54,7 +51,6 @@ function ExerciseCard({
                     </span>
                 </div>
 
-                {/* Content */}
                 <div className="space-y-3">
                     <div>
                         <h3 className="text-lg font-semibold text-white group-hover:text-white transition-colors">
@@ -65,7 +61,6 @@ function ExerciseCard({
                         </p>
                     </div>
 
-                    {/* Stats */}
                     <div className="grid grid-cols-2 gap-4 pt-2">
                         <div className="flex items-center gap-2">
                             <Clock className="h-4 w-4 text-[#1DB954]" />
@@ -77,7 +72,6 @@ function ExerciseCard({
                         </div>
                     </div>
 
-                    {/* Target Muscles */}
                     <div className="flex flex-wrap gap-2">
                         {exercise.targetMuscles.slice(0, 3).map((muscle, index) => (
                             <span key={index} className="px-2 py-1 bg-[#2D2D2D] rounded-lg text-xs text-gray-400">
@@ -92,7 +86,6 @@ function ExerciseCard({
                     </div>
                 </div>
 
-                {/* Actions */}
                 <div className="flex gap-2 pt-4 border-t border-[#2D2D2D]">
                     <button
                         onClick={onStart}
@@ -113,7 +106,6 @@ function ExerciseCard({
     )
 }
 
-// ExerciseFilters component
 function ExerciseFilters({
     onFiltersChange,
     filters
@@ -126,7 +118,6 @@ function ExerciseFilters({
     const [difficulty, setDifficulty] = useState("")
     const [equipment, setEquipment] = useState("")
 
-    // Sincroniza los filtros externos con los internos
     useEffect(() => {
         setSearch(filters.search || "")
         setCategory(filters.category || "")
@@ -177,7 +168,6 @@ function ExerciseFilters({
                 <h3 className="text-lg font-semibold text-white">Filtros</h3>
             </div>
 
-            {/* Search */}
             <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-400">Buscar ejercicio</label>
                 <div className="relative">
@@ -192,7 +182,6 @@ function ExerciseFilters({
                 </div>
             </div>
 
-            {/* Category */}
             <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-400">Categoría</label>
                 <select
@@ -207,7 +196,6 @@ function ExerciseFilters({
                 </select>
             </div>
 
-            {/* Difficulty */}
             <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-400">Dificultad</label>
                 <select
@@ -222,7 +210,6 @@ function ExerciseFilters({
                 </select>
             </div>
 
-            {/* Equipment */}
             <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-400">Equipo</label>
                 <select
@@ -237,7 +224,6 @@ function ExerciseFilters({
                 </select>
             </div>
 
-            {/* Clear Filters */}
             <button
                 onClick={clearFilters}
                 className="w-full bg-[#2D2D2D] hover:bg-[#3D3D3D] text-white py-2 rounded-lg transition-colors font-medium"
@@ -255,7 +241,6 @@ export default function ExerciseLibraryPage() {
         setFilters({})
     }
 
-    // Mock data - En una aplicación real, esto vendría de una API o Supabase
     const exercises: Exercise[] = [
         {
             id: "1",
@@ -369,20 +354,15 @@ export default function ExerciseLibraryPage() {
 
     const handleStartExercise = (exerciseId: string) => {
         console.log("Iniciando ejercicio:", exerciseId)
-        // En una aplicación real, aquí navegarías a la página del ejercicio
-        // navigate(`/exercise/${exerciseId}`)
     }
 
     const handleViewDetails = (exerciseId: string) => {
         console.log("Ver detalles del ejercicio:", exerciseId)
-        // En una aplicación real, aquí navegarías a los detalles del ejercicio
-        // navigate(`/exercise/${exerciseId}/details`)
     }
 
     return (
         <div className="min-h-screen p-6">
             <div className="mx-auto space-y-6">
-                {/* Header */}
                 <div className="space-y-2">
                     <h1 className="text-3xl font-bold text-white">Biblioteca de Ejercicios</h1>
                     <p className="text-gray-400">
@@ -391,18 +371,16 @@ export default function ExerciseLibraryPage() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                    {/* Filters Sidebar */}
+                   
                     <div className="lg:col-span-1">
                         <ExerciseFilters
                             onFiltersChange={setFilters}
-                            filters={filters} // <-- pasa los filtros actuales
+                            filters={filters} 
                         />
                     </div>
 
-                    {/* Exercise Grid */}
                     <div className="lg:col-span-3">
                         <div className="space-y-6">
-                            {/* Results Header */}
                             <div className="flex items-center justify-between">
                                 <p className="text-sm text-gray-400">
                                     Mostrando <span className="text-[#1DB954] font-medium">{filteredExercises.length}</span> de{" "}
@@ -414,7 +392,6 @@ export default function ExerciseLibraryPage() {
                                 </div>
                             </div>
 
-                            {/* Exercise Cards Grid */}
                             {filteredExercises.length > 0 ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                                     {filteredExercises.map((exercise) => (
@@ -427,7 +404,6 @@ export default function ExerciseLibraryPage() {
                                     ))}
                                 </div>
                             ) : (
-                                /* Empty State */
                                 <div className="text-center py-12">
                                     <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-8 max-w-md mx-auto">
                                         <div className="bg-[#1DB954]/10 rounded-full p-4 w-fit mx-auto mb-4">

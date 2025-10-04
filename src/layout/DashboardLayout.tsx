@@ -46,19 +46,16 @@ export default function DashboardLayout() {
 
     return (
         <div className="h-screen bg-[#0A0A0A] flex overflow-hidden">
-            {/* Mobile sidebar overlay */}
             {sidebarOpen && (
                 <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
             )}
 
-            {/* Sidebar - Fixed */}
             <div
                 className={`
         fixed inset-y-0 left-0 z-50 w-64 bg-[#0A0A0A] border-r border-[#404040] transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
       `}
             >
-                {/* Logo */}
                 <div className="flex items-center gap-3 p-6">
                     <div className="bg-[#1DB954] rounded-full p-2">
                         <Dumbbell className="h-6 w-6 text-[#0A0A0A]" />
@@ -69,7 +66,6 @@ export default function DashboardLayout() {
                     </div>
                 </div>
 
-                {/* Navigation - Scrollable */}
                 <nav className="flex-1 px-4 py-2 space-y-1 overflow-y-auto">
                     {navigation.map((item) => {
                         const isActive = location.pathname === item.href
@@ -93,7 +89,6 @@ export default function DashboardLayout() {
                     })}
                 </nav>
 
-                {/* Logout Button - Fixed at bottom */}
                 <div className="p-4 border-t border-[#404040]">
                     <button
                         onClick={handleSignOut}
@@ -105,9 +100,7 @@ export default function DashboardLayout() {
                 </div>
             </div>
 
-            {/* Main content - Scrollable */}
             <div className="flex-1 flex flex-col min-w-0">
-                {/* Mobile header */}
                 <header className="bg-[#0A0A0A] border-b border-[#404040] px-4 py-4 lg:hidden">
                     <button
                         onClick={() => setSidebarOpen(true)}
@@ -117,7 +110,6 @@ export default function DashboardLayout() {
                     </button>
                 </header>
 
-                {/* Page content - Scrollable */}
                 <main className="flex-1 overflow-y-auto">
                     <div className="p-6">
                         <Outlet />
@@ -125,7 +117,6 @@ export default function DashboardLayout() {
                 </main>
             </div>
 
-            {/* Mobile sidebar close button */}
             {sidebarOpen && (
                 <button
                     onClick={() => setSidebarOpen(false)}

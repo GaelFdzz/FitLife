@@ -4,7 +4,6 @@ import { LineChart } from '@mui/x-charts/LineChart'
 import { BarChart } from '@mui/x-charts/BarChart'
 import { PieChart } from '@mui/x-charts/PieChart'
 
-// Types
 interface WeightData {
     date: string
     weight: number
@@ -40,7 +39,6 @@ interface BodyMeasurement {
     thighs: number
 }
 
-// WeightChart Component
 function WeightChart({ data }: { data: WeightData[] }) {
     const dates = data.map(item => item.date)
     const weights = data.map(item => item.weight)
@@ -72,13 +70,13 @@ function WeightChart({ data }: { data: WeightData[] }) {
                         scaleType: 'point',
                         data: dates,
                         tickLabelStyle: {
-                            fill: '#FFFFFF', // blanco
+                            fill: '#FFFFFF',
                             fontSize: 12
                         }
                     }]}
                     yAxis={[{
                         tickLabelStyle: {
-                            fill: '#FFFFFF', // blanco
+                            fill: '#FFFFFF',
                             fontSize: 12
                         }
                     }]}
@@ -106,7 +104,6 @@ function WeightChart({ data }: { data: WeightData[] }) {
     )
 }
 
-// WorkoutChart Component
 function WorkoutChart({ data }: { data: WorkoutData[] }) {
     const weeks = data.map(item => item.week)
     const workouts = data.map(item => item.workouts)
@@ -135,7 +132,7 @@ function WorkoutChart({ data }: { data: WorkoutData[] }) {
                             color: '#1DB954'
                         },
                         {
-                            data: duration.map(d => d / 10), // Escalar para mejor visualización
+                            data: duration.map(d => d / 10),
                             label: 'Duración (x10 min)',
                             color: '#0EA5E9'
                         }
@@ -192,7 +189,6 @@ function NutritionChart({ macroData, calorieData }: { macroData: MacroData[]; ca
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Macronutrientes */}
             <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-6">
                 <div className="flex items-center justify-between mb-6">
                     <div>
@@ -247,7 +243,6 @@ function NutritionChart({ macroData, calorieData }: { macroData: MacroData[]; ca
                 </div>
             </div>
 
-            {/* Calorías */}
             <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-6">
                 <div className="flex items-center justify-between mb-6">
                     <div>
@@ -310,7 +305,6 @@ function NutritionChart({ macroData, calorieData }: { macroData: MacroData[]; ca
                         grid={{ vertical: true, horizontal: true }}
                     />
 
-                    {/* Línea de objetivo superpuesta */}
                     <div className="relative -mt-64 h-64 pointer-events-none">
                         <div
                             className="absolute w-full border-t-2 border-dashed border-[#A3A3A3]"
@@ -333,7 +327,6 @@ function NutritionChart({ macroData, calorieData }: { macroData: MacroData[]; ca
     )
 }
 
-// BodyMeasurements Component
 function BodyMeasurements({ data }: { data: BodyMeasurement[] }) {
     const [selectedMeasurement, setSelectedMeasurement] = useState<string>('waist')
 
@@ -464,7 +457,6 @@ function BodyMeasurements({ data }: { data: BodyMeasurement[] }) {
     )
 }
 
-// StatCard Component
 function StatCard({
     title,
     value,
@@ -516,7 +508,6 @@ function StatCard({
 export default function Progress() {
     const [timeRange, setTimeRange] = useState("30d")
 
-    // Mock data - En una aplicación real, esto vendría de Supabase
     const weightData: WeightData[] = [
         { date: "01/01", weight: 78, target: 75 },
         { date: "08/01", weight: 77.5, target: 75 },
@@ -570,7 +561,6 @@ export default function Progress() {
     return (
         <div className="min-h-screen p-6">
             <div className="mx-auto space-y-8">
-                {/* Header */}
                 <div className="flex items-center justify-between">
                     <div className="space-y-2">
                         <h1 className="text-3xl font-bold text-white">Seguimiento de Progreso</h1>
@@ -600,7 +590,6 @@ export default function Progress() {
                     </div>
                 </div>
 
-                {/* Summary Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6 ">
                     <StatCard
                         title="Peso Actual"
@@ -628,18 +617,13 @@ export default function Progress() {
                     />
                 </div>
 
-                {/* Charts Grid */}
                 <div className="space-y-8">
-                    {/* Weight Progress */}
                     <WeightChart data={weightData} />
 
-                    {/* Workout Activity */}
                     <WorkoutChart data={workoutData} />
 
-                    {/* Nutrition Charts */}
                     <NutritionChart macroData={macroData} calorieData={calorieData} />
 
-                    {/* Body Measurements */}
                     <BodyMeasurements data={bodyMeasurements} />
                 </div>
             </div>

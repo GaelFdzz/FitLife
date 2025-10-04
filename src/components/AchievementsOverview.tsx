@@ -1,9 +1,6 @@
-"use client"
-
 import { useState } from "react"
 import { Trophy, Star, Target, Lock, CheckCircle } from "lucide-react"
 
-// Types
 interface Achievement {
   id: string
   title: string
@@ -17,7 +14,6 @@ interface Achievement {
   unlockedDate?: string
 }
 
-// Mock Data
 const mockAchievements: Achievement[] = [
   {
     id: "1",
@@ -89,7 +85,6 @@ const mockAchievements: Achievement[] = [
   },
 ]
 
-// Category Configuration
 const categoryColors = {
   workout: "bg-blue-500",
   nutrition: "bg-green-500",
@@ -104,7 +99,6 @@ const categoryLabels = {
   social: "Social",
 }
 
-// Achievement Card Component
 function AchievementCard({ achievement }: { achievement: Achievement }) {
   const progressPercentage = (achievement.progress / achievement.maxProgress) * 100
 
@@ -115,7 +109,6 @@ function AchievementCard({ achievement }: { achievement: Achievement }) {
       }`}
     >
       <div className="flex items-start gap-3">
-        {/* Icon */}
         <div
           className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center ${
             achievement.unlocked ? "bg-[#1DB954]/20" : "bg-[#2D2D2D]"
@@ -130,7 +123,6 @@ function AchievementCard({ achievement }: { achievement: Achievement }) {
           )}
         </div>
 
-        {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2 mb-2">
             <div>
@@ -149,7 +141,6 @@ function AchievementCard({ achievement }: { achievement: Achievement }) {
             </div>
           </div>
 
-          {/* Progress Bar */}
           {!achievement.unlocked && (
             <div className="space-y-2">
               <div className="flex justify-between text-xs">
@@ -167,7 +158,6 @@ function AchievementCard({ achievement }: { achievement: Achievement }) {
             </div>
           )}
 
-          {/* Unlocked Date */}
           {achievement.unlocked && achievement.unlockedDate && (
             <p className="text-xs text-[#1DB954] mt-2">Desbloqueado el {achievement.unlockedDate}</p>
           )}
@@ -177,7 +167,6 @@ function AchievementCard({ achievement }: { achievement: Achievement }) {
   )
 }
 
-// Achievements Overview Component
 export default function AchievementsOverview() {
   const [filter, setFilter] = useState<"all" | "unlocked" | "locked">("all")
 
@@ -192,7 +181,6 @@ export default function AchievementsOverview() {
 
   return (
     <div className="space-y-6">
-      {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-4">
           <div className="flex items-center gap-3">
@@ -233,7 +221,6 @@ export default function AchievementsOverview() {
         </div>
       </div>
 
-      {/* Achievements List */}
       <div className="bg-[#1A1A1A] border border-[#2D2D2D] rounded-2xl p-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold text-white">Mis Logros</h2>
