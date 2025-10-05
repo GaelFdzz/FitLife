@@ -10,13 +10,16 @@ import Achievements from "./pages/Achievements"
 import Settings from "./pages/Settings"
 import Profile from "./pages/Profile"
 import Register from "./pages/Register"
-import { AuthProvider, useAuth } from "./context/AuthContext"
+import { useAuth } from "./context/AuthContext"
 import LoginPage from "./pages/Login"
 import LandinPage from "./pages/LandinPage"
 import { ToastContainer } from "react-toastify"
+import WorkoutSession from "./pages/WorkoutSession"
+import { useExerciseNotifications } from "./hooks/useExerciseNotifications"
 
 function App() {
-
+  const { user, loading } = useAuth()
+  useExerciseNotifications(user?.id)
   const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { user, loading } = useAuth()
     if (loading) {
@@ -31,7 +34,7 @@ function App() {
   return (
     <>
       <ToastContainer
-        position="top-right"
+        position="bottom-center"
         autoClose={5000} // tiempo en ms
         hideProgressBar={false}
         newestOnTop={true}
@@ -40,31 +43,30 @@ function App() {
         draggable
         theme="dark"
       />
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<LandinPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<Register />} />
-          <Route
-            path="/dashboard/*"
-            element={
-              <ProtectedRoute>
-                <DashboardLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<Dashboard />} />
-            <Route path="exercise-library" element={<ExerciseLibrary />} />
-            <Route path="exercise-plans" element={<ExercisePlan />} />
-            <Route path="nutrition" element={<Nutrition />} />
-            <Route path="progress" element={<Progress />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="achievements" element={<Achievements />} />
-            <Route path="notifications" element={<Notifications />} />
-            <Route path="settings" element={<Settings />} />
-          </Route>
-        </Routes>
-      </AuthProvider>
+      <Routes>
+        <Route path="/" element={<LandinPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/dashboard/*"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Dashboard />} />
+          <Route path="exercise-library" element={<ExerciseLibrary />} />
+          <Route path="exercise-plans" element={<ExercisePlan />} />
+          <Route path="nutrition" element={<Nutrition />} />
+          <Route path="progress" element={<Progress />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="achievements" element={<Achievements />} />
+          <Route path="notifications" element={<Notifications />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="workout-session/:planId" element={<WorkoutSession />} />
+        </Route>
+      </Routes>
     </>
   )
 }
