@@ -8,7 +8,6 @@ export function useExerciseNotifications(userId: string | undefined) {
     useEffect(() => {
         if (!userId) return
 
-        // 1. Al entrar, consulta notificaciones pendientes SOLO de planes activos
         async function fetchPendingNotifications() {
             const today = new Date().toISOString().slice(0, 10)
             const { data } = await supabase
@@ -28,14 +27,11 @@ export function useExerciseNotifications(userId: string | undefined) {
 
         fetchPendingNotifications()
 
-        // 2. Mientras está en la app, revisa cada minuto si es hora de notificar
         const interval = setInterval(async () => {
             const now = new Date()
-            // Formato "HH:MM:SS"
-            const currentTime = now.toTimeString().slice(0, 8)
+            const currentTime = now.toTimeString().slice(0, 5)
             const today = now.toISOString().slice(0, 10)
 
-            // Busca los planes ACTIVOS del usuario
             const { data: plans } = await supabase
                 .from("exercise_plans")
                 .select("id, plan_name, notification_time, is_active")
@@ -43,15 +39,15 @@ export function useExerciseNotifications(userId: string | undefined) {
                 .eq("is_active", true)
 
             plans?.forEach(plan => {
-                // Solo notifica si la hora coincide exactamente y no se ha notificado hoy
                 if (
-                    plan.notification_time === currentTime &&
+                    plan.notification_time?.slice(0, 5) === currentTime &&
                     notifiedToday.current[plan.id] !== today
                 ) {
                     toast.info(`¡Hora de entrenar! Plan: ${plan.plan_name}`)
                     notifiedToday.current[plan.id] = today
                 }
             })
+            // console.log("Checked notifications at", currentTime, plans)
         }, 60000) // cada minuto
 
         return () => clearInterval(interval)

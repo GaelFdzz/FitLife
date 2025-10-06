@@ -5,9 +5,11 @@
   width: 6px;
   background: #181818;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #1DB954;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #169c43;
 }
@@ -17,11 +19,34 @@
   background: #1DB954;
   color: #0A0A0A;
 }
+
 ::-moz-selection {
   background: #1DB954;
   color: #0A0A0A;
 }
 
-html{
+html {
   background-color: #0A0A0A;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  display: flex;
+  width: 200%;
+  /* duplicamos el ancho del contenedor */
+  animation: scroll 15s linear infinite;
+  /* más tiempo = más suave */
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
 }
