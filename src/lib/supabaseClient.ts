@@ -133,7 +133,6 @@ export async function getUserExercisePlans(userId: string) {
 
 export async function updateExercisePlanStatus(userId: string, planIdToActivate: string) {
   try {
-    // Desactivar cualquier plan activo existente del usuario
     const { error: deactivateError } = await supabase
       .from('exercise_plans')
       .update({ is_active: false })
@@ -142,7 +141,6 @@ export async function updateExercisePlanStatus(userId: string, planIdToActivate:
 
     if (deactivateError) throw deactivateError
 
-    // Activar el plan seleccionado
     const { data, error: activateError } = await supabase
       .from('exercise_plans')
       .update({ is_active: true })
@@ -160,28 +158,24 @@ export async function updateExercisePlanStatus(userId: string, planIdToActivate:
 
 export async function deleteExercisePlan(planId: string) {
   try {
-    // 1️⃣ Eliminar logs de ejercicios
     const { error: deleteLogsError } = await supabase
       .from('user_exercise_logs')
       .delete()
       .eq('plan_id', planId)
     if (deleteLogsError) throw deleteLogsError
 
-    // 2️⃣ Eliminar sesiones de entrenamiento
     const { error: deleteSessionsError } = await supabase
       .from('workout_sessions')
       .delete()
       .eq('plan_id', planId)
     if (deleteSessionsError) throw deleteSessionsError
 
-    // 3️⃣ Eliminar ejercicios del plan
     const { error: deleteExercisesError } = await supabase
       .from('plan_exercises')
       .delete()
       .eq('plan_id', planId)
     if (deleteExercisesError) throw deleteExercisesError
 
-    // 4️⃣ Finalmente eliminar el plan
     const { error: deletePlanError } = await supabase
       .from('exercise_plans')
       .delete()

@@ -47,7 +47,7 @@ export function useExerciseNotifications(userId: string | undefined) {
                     notifiedToday.current[plan.id] = today
                 }
             })
-            // console.log("Checked notifications at", currentTime, plans)
+            // console.log("Notificacion checada a la hora: ", currentTime, plans)
         }, 60000) // cada minuto
 
         return () => clearInterval(interval)

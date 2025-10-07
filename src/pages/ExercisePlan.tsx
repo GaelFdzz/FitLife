@@ -7,6 +7,7 @@ import {
   getExercisesByPlan
 } from "../lib/supabaseClient"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 interface ExercisePlan {
   id: string
@@ -51,7 +52,7 @@ function PlanCard({
 }: {
   plan: ExercisePlan
   onStart: () => void
-  onContinue?: () => void   // 👈 opcional
+  onContinue?: () => void
   onViewDetails: () => void
   onDelete: () => void
 }) {
@@ -141,7 +142,7 @@ function PlanCard({
           <button
             onClick={() => {
               if (plan.is_active) {
-                onContinue?.()   // 👈 con safe-call
+                onContinue?.()
               } else {
                 onStart()
               }
@@ -211,10 +212,8 @@ export default function ExercisePlan() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
 
-      // Usar la función de supabaseClient
       const plansData = await getUserExercisePlans(user.id)
 
-      // Obtener el conteo de ejercicios para cada plan
       const plansWithExerciseCount = await Promise.all(
         plansData.map(async (plan) => {
           const { count } = await supabase
@@ -278,10 +277,10 @@ export default function ExercisePlan() {
 
       setPlans(prevPlans => prevPlans.filter(plan => plan.id !== planId))
 
-      alert("Plan eliminado exitosamente")
+      toast.success("¡Plan eliminado correctamente!")
     } catch (err) {
       console.error("Error eliminando plan:", err)
-      alert("Error al eliminar el plan")
+      toast.error("Error al eliminar el plan")
     }
   }
 
@@ -299,10 +298,10 @@ export default function ExercisePlan() {
         }))
       )
 
-      alert("¡Plan activado exitosamente!")
+      toast.success("¡Plan activado exitosamente!")
     } catch (err) {
       console.error("Error activando plan:", err)
-      alert("Error al activar el plan")
+      toast.error("Error al activar el plan")
     }
   }
 
@@ -315,14 +314,12 @@ export default function ExercisePlan() {
       const plan = plans.find(p => p.id === planId)
       setSelectedPlanName(plan?.plan_name ?? "Plan")
 
-      // Usar la función de supabaseClient
       const exercisesData = await getExercisesByPlan(planId)
 
       setSelectedPlanExercises(exercisesData ?? [])
       setShowDetailsModal(true)
     } catch (err) {
-      console.error("Error obteniendo detalles:", err)
-      alert("Error al cargar los detalles del plan")
+      toast.error("Error cargando detalles del plan")
     }
   }
 
@@ -342,10 +339,10 @@ export default function ExercisePlan() {
   const handleSubmitPlan = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser()
-      if (!user) return alert("Usuario no autenticado")
+      if (!user) return toast.error("Usuario no autenticado")
 
       if (!newPlan.plan_name || !newPlan.goal || !newPlan.start_date) {
-        return alert("Por favor completa los campos obligatorios")
+        return toast.error("Por favor completa todos los campos obligatorios")
       }
 
       const notificationTime =
@@ -402,10 +399,10 @@ export default function ExercisePlan() {
         exercises: [],
       })
       setShowModal(false)
-      alert("¡Plan creado exitosamente!")
+      toast.success("¡Plan creado exitosamente!")
     } catch (err) {
       console.error("Error creando plan:", err)
-      alert("Error al crear plan")
+      toast.error("Error al crear plan")
     }
   }
 
@@ -468,7 +465,6 @@ export default function ExercisePlan() {
         )}
       </div>
 
-      {/* Modal de detalles del plan */}
       {showDetailsModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-[#1A1A1A] p-6 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto space-y-4">
@@ -545,7 +541,6 @@ export default function ExercisePlan() {
         </div>
       )}
 
-      {/* Modal para crear plan */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-[#1A1A1A] p-6 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto space-y-4">

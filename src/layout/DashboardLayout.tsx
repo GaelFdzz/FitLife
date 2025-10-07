@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom"
 import { Home, Dumbbell, BookOpen, Apple, TrendingUp, User, Award, Bell, Settings, LogOut, ChevronLeft, ChevronRight } from "lucide-react"
-import { useAuth } from "../context/AuthContext"  // <-- aquí usas tu contexto
+import { useAuth } from "../context/AuthContext"
 
 const navigation = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
